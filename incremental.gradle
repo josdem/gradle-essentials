@@ -1,6 +1,10 @@
 task convert {
   def source = new File("source.json")
   def output = new File("output.txt")
+
+  inputs.file source
+  inputs.file output
+
   doLast{
     def slurper = new groovy.json.JsonSlurper().parseText(source.text)
     output.text = slurper.collect{it}.join("\n")
@@ -8,6 +12,6 @@ task convert {
   }
 }
 
-task show(dependsOn:convert){
+task show(dependsOn:convert) << {
   println new File("output.txt").text
 }
