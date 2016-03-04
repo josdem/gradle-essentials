@@ -1,0 +1,22 @@
+task first << {
+  print "First task"
+}
+
+task second(dependsOn : first) << {
+  print "Second task"
+}
+
+def browsers = ['Safari', 'Firefox', 'Chrome', 'IE']
+browsers.each { browser ->
+  task "testIn${browser}" << {
+    println "Testing in $browser"
+  }
+}
+
+task testAll << {
+  println "Testing in all browsers"
+}
+
+testAll.dependsOn(browsers.collect{
+  "testIn$it"
+})

@@ -1,0 +1,7 @@
+task holaMundo << {
+  print "Hola Mundo :: ${new Date()}"
+}
+
+task generateTest {
+  println "Generando pruebas"
+}
