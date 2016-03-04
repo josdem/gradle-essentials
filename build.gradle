@@ -1,7 +1,38 @@
+project.description = "description"
+
 task holaMundo << {
   print "Hola Mundo :: ${new Date()}"
 }
 
 task generateTest {
   println "Generando pruebas"
+}
+
+project.ext.myProperty1 = "One"
+
+task doSomething {
+  ext.propertyTwo = "Two"
+}
+
+task showRootProject{
+  println project.rootProject.properties
+  println getBuildscript()
+  println "Project: ${project.description}"
+}
+
+task showProjectProperties {
+  println project.tasks
+  println ".:"+myProperty1+":."
+}
+
+task first {
+  doFirst {
+    println "First action"
+  }
+}
+
+task second {
+  doLast { task ->
+    println "Second action in ${task.name}"
+  }
 }

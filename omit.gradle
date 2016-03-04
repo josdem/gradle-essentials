@@ -1,0 +1,45 @@
+defaultTasks 'runIfAvailable'
+
+task runIfAvailable {
+  onlyIf {
+    println "Running at ${new Date()}"
+  }
+  doLast {
+    println "Loading file ${file.name}"
+  }
+}
+
+def file = new File("some data")
+task loadData << {
+  println "Loading file ${file.name}"
+}
+loadData.onlyIf(new Spec(){
+  boolean isSatisfiedBy(task){
+    file.exists()
+  }
+})
+
+task invariable {
+  println "Invariable"
+}
+
+task intermitente {
+  doFirst { t ->
+    if(new Date().minutes % 2 == 0){
+      throw new StopExecutionException()
+    }
+  }
+  doLast {
+    println "Running at ${new Date()}"
+  }
+}
+
+invariable.dependsOn "intermitente"
+
+task listFilesInDirectory {
+  def dir = new File("work")
+  enabled = dir.exists()
+  doLast {
+    println "Listando directorio ${dir.lastFiles().join(',')}"
+  }
+}
