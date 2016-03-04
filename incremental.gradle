@@ -3,7 +3,7 @@ task convert {
   def output = new File("output.txt")
 
   inputs.file source
-  inputs.file output
+  outputs.file output
 
   doLast{
     def slurper = new groovy.json.JsonSlurper().parseText(source.text)
