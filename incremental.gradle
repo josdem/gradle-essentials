@@ -12,6 +12,6 @@ task convert {
   }
 }
 
-task show(dependsOn:convert) << {
+task "show"(dependsOn:"convert") << {
   println new File("output.txt").text
 }
